@@ -17,6 +17,7 @@ data class SiteContent(
     val cvRuUrl: String,
     val commonStack: List<StackItem>,
     val experiences: List<Experience>,
+    val projectActivities: List<Experience> = emptyList(),
     val contacts: List<ContactItem>
 )
 
@@ -26,7 +27,7 @@ data class Experience(
     val role: String,
     val period: String,
     val aboutPosition: String,
-    val responsibilities: List<String>,
+    val responsibilities: List<String>?,
     val results: List<String>,
     val stack: List<String>
 )

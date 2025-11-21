@@ -35,7 +35,6 @@ import kotlinx.html.li
 import kotlinx.html.style
 import kotlinx.html.title
 import kotlinx.html.unsafe
-import tech.themukha.models.ContactItem
 import tech.themukha.models.NavItem
 import tech.themukha.models.SiteContent
 import tech.themukha.models.StackItem
@@ -252,6 +251,9 @@ private fun FlowContent.renderStack(items: List<StackItem>) {
                     }
                 }
                 items.forEach { techCard(it.iconUrl, it.title, it.subtitle) }
+                div("mt-6 col-span-full text-center") {
+                    p("text-xs text-slate-400 italic") { +"More details in the resume below..." }
+                }
             }
         }
     }
@@ -314,7 +316,7 @@ private fun FlowContent.renderResume(content: SiteContent) {
                                     // About position
                                     if (exp.aboutPosition.isNotBlank()) { p("text-sm text-slate-600 mt-2") { +exp.aboutPosition } }
                                     // Responsibilities
-                                    if (exp.responsibilities.isNotEmpty()) {
+                                    if (exp.responsibilities?.isNotEmpty() == true) {
                                         h6("mt-3 text-xs font-bold uppercase tracking-wider text-slate-500") { +"Responsibilities" }
                                         ul("list-disc list-inside text-sm text-slate-600 space-y-1 mt-1") { exp.responsibilities.forEach { item -> li { +item } } }
                                     }
@@ -326,6 +328,35 @@ private fun FlowContent.renderResume(content: SiteContent) {
                                     // Stack chips
                                     if (exp.stack.isNotEmpty()) {
                                         div("mt-3 flex flex-wrap gap-2") { exp.stack.forEach { tech -> span("px-2 py-0.5 rounded-full border border-slate-300 bg-slate-100 text-slate-700 text-xs") { +tech } } }
+                                    }
+                                }
+                            }
+                        }
+                        div {
+                            if (content.projectActivities.isNotEmpty()) {
+                                div("my-6 border-t border-gray-200") {}
+                                h4("font-bold text-slate-800 uppercase text-sm tracking-wider mb-2") { +"Project Activities" }
+                                content.projectActivities.forEach { exp ->
+                                    div("mb-6") {
+                                        if (exp.company.isNotBlank()) {
+                                            div("flex justify-between items-baseline") { h5("font-bold text-slate-700") { +exp.company } }
+                                        }
+                                        div("flex justify-between items-baseline") {
+                                            h6("font-bold text-slate-500") { +exp.role }
+                                            span("text-sm text-slate-500") { +exp.period }
+                                        }
+                                        if (exp.aboutPosition.isNotBlank()) { p("text-sm text-slate-600 mt-2") { +exp.aboutPosition } }
+                                        if (exp.responsibilities?.isNotEmpty() == true) {
+                                            h6("mt-3 text-xs font-bold uppercase tracking-wider text-slate-500") { +"Responsibilities" }
+                                            ul("list-disc list-inside text-sm text-slate-600 space-y-1 mt-1") { exp.responsibilities.forEach { item -> li { +item } } }
+                                        }
+                                        if (exp.results.isNotEmpty()) {
+                                            h6("mt-3 text-xs font-bold uppercase tracking-wider text-slate-500") { +"Results" }
+                                            ul("list-disc list-inside text-sm text-slate-600 space-y-1 mt-1") { exp.results.forEach { item -> li { +item } } }
+                                        }
+                                        if (exp.stack.isNotEmpty()) {
+                                            div("mt-3 flex flex-wrap gap-2") { exp.stack.forEach { tech -> span("px-2 py-0.5 rounded-full border border-slate-300 bg-slate-100 text-slate-700 text-xs") { +tech } } }
+                                        }
                                     }
                                 }
                             }
@@ -382,7 +413,7 @@ private fun FlowContent.renderContacts(content: SiteContent) {
 
 private fun FlowContent.renderFooter(content: SiteContent) {
     footer("py-8 border-t border-slate-800 bg-slate-950 text-center") {
-        p("text-slate-500 text-sm font-mono") { +"© ${LocalDateTime.now().year} ${content.fullName}. themukha.tech" }
+        p("text-slate-500 text-sm font-mono") { +"© ${LocalDateTime.now().year} ${content.fullName}, themukha.tech. Powered by Ktor" }
     }
 }
 

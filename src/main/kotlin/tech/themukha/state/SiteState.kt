@@ -37,10 +37,16 @@ object SiteState {
         commonStack = listOf(
             StackItem("https://cdn.simpleicons.org/kotlin", "Kotlin", "Programming Language"),
             StackItem("/static/img/icons/java.svg", "Java", "Programming Language"),
-            StackItem("https://cdn.simpleicons.org/postgresql", "PostgreSQL", "DB"),
-            StackItem("/static/img/icons/allure.svg", "Allure TestOps", "Reporting"),
+            StackItem("https://cdn.simpleicons.org/postgresql", "PostgreSQL", "Database"),
+            StackItem("https://cdn.simpleicons.org/clickhouse", "ClickHouse", "Database"),
             StackItem("/static/img/icons/kafka.svg", "Kafka", "Message Broker"),
-            StackItem("https://cdn.simpleicons.org/gatling", "Gatling", "Load Testing")
+            StackItem("/static/img/icons/fix.svg", "FIX", "Protocol"),
+            StackItem("/static/img/icons/grpc.svg", "gRPC", "Protocol"),
+            StackItem("/static/img/icons/websocket.svg", "WebSocket", "Protocol"),
+            StackItem("https://cdn.simpleicons.org/openapiinitiative", "REST API", "Protocol"),
+            StackItem("https://cdn.simpleicons.org/grafana", "Grafana", "Monitoring"),
+            StackItem("https://cdn.simpleicons.org/docker", "Docker", "CD/CD"),
+            StackItem("https://cdn.simpleicons.org/jenkins", "Jenkins", "CI/CD"),
         ),
         experiences = listOf(
             Experience(
@@ -105,6 +111,23 @@ object SiteState {
                     "Kotlin", "Swift", "JavaScript", "TypeScript", "WebSocket", "REST API", "ClickHouse"
                 )
             ),
+        ),
+        projectActivities = listOf(
+            Experience(
+                company = "BHFT",
+                role = "SDET",
+                period = "November 2024 - March 2025",
+                aboutPosition = "Development and deployment of QA backend services, ensuring the quality of the platform for high-frequency trading (HFT) in cryptocurrencies and traditional finance.",
+                responsibilities = null,
+                results = listOf(
+                    "Developed a proxy service to intercept incoming and outgoing messages via FIX, gRPC, WebSocket, and HTTP protocols from the trading platform to trading exchanges. The service can modify requests/responses, simulate delays and channel blocking, and simultaneously work with multiple exchanges",
+                    "Implemented a service for creating a queue for automated tests to interact with specific exchanges to avoid cross-trading",
+                    "Developed and stabilized automated tests for market data gateways, execution gateways, and trading robots"
+                ),
+                stack = listOf(
+                    "Kotlin", "Java", "Python", "REST API", "gRPC", "WebSocket", "FIX", "Gradle", "Docker", "Jenkins", "JUnit5", "ClickHouse", "PostgreSQL", "Ktor"
+                )
+            )
         ),
         contacts = listOf(
             ContactItem(
