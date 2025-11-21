@@ -1,20 +1,47 @@
 package tech.themukha.state
 
+import tech.themukha.models.ContactItem
 import tech.themukha.models.Experience
+import tech.themukha.models.NavItem
 import tech.themukha.models.SiteContent
+import tech.themukha.models.StackItem
 
 object SiteState {
+    // Base contact sources
+    private const val FULL_NAME = "George Mukha"
+    private const val TELEGRAM_URL = "https://t.me/themukha"
+    private const val LINKEDIN_URL = "https://www.linkedin.com/in/themukha/"
+    private const val WHATSAPP_URL = "https://wa.me/66638853290"
+    private const val EMAIL_ADDR = "george@themukha.tech"
+
+    private fun telegramHandle(url: String): String = url.substringAfterLast('/').let { if (it.isNotBlank()) "@${it}" else "Telegram" }
+    private fun whatsAppDisplay(url: String): String = url.substringAfterLast('/').let { if (it.all { ch -> ch.isDigit() }) "+$it" else url }
+
     var content: SiteContent = SiteContent(
-        fullName = "George Mukha",
+        navigation = listOf(
+            NavItem("About me", "#about"),
+            NavItem("Stack", "#stack"),
+            NavItem("CV", "#resume"),
+            NavItem("Contacts", "#contact")
+        ),
+        fullName = FULL_NAME,
         tagline = "QA Auto Engineer / SDET",
         about = "AQA/SDET with over 5 years of experience in the tech industry. I implement new technologies to automate product quality assurance.",
-        telegram = "https://t.me/themukha",
-        whatsapp = "https://wa.me/66638853290",
-        email = "george@themukha.tech",
-        linkedin = "https://www.linkedin.com/in/themukha/",
+        telegram = TELEGRAM_URL,
+        whatsapp = WHATSAPP_URL,
+        email = EMAIL_ADDR,
+        linkedin = LINKEDIN_URL,
         photoUrl = "/static/img/avatar.jpg",
         cvEnUrl = "/static/cv_en.pdf",
         cvRuUrl = "/static/cv_ru.pdf",
+        commonStack = listOf(
+            StackItem("https://cdn.simpleicons.org/kotlin", "Kotlin", "Programming Language"),
+            StackItem("/static/img/icons/java.svg", "Java", "Programming Language"),
+            StackItem("https://cdn.simpleicons.org/postgresql", "PostgreSQL", "DB"),
+            StackItem("/static/img/icons/allure.svg", "Allure TestOps", "Reporting"),
+            StackItem("/static/img/icons/kafka.svg", "Kafka", "Message Broker"),
+            StackItem("https://cdn.simpleicons.org/gatling", "Gatling", "Load Testing")
+        ),
         experiences = listOf(
             Experience(
                 company = "T-Bank (50 mln clients)",
@@ -78,6 +105,36 @@ object SiteState {
                     "Kotlin", "Swift", "JavaScript", "TypeScript", "WebSocket", "REST API", "ClickHouse"
                 )
             ),
+        ),
+        contacts = listOf(
+            ContactItem(
+                label = "Telegram",
+                href = TELEGRAM_URL,
+                iconClass = "fa-brands fa-telegram",
+                containerClasses = "p-3 bg-sky-500/20 rounded-lg text-sky-400 group-hover:bg-sky-500 group-hover:text-white transition-colors",
+                value = telegramHandle(TELEGRAM_URL)
+            ),
+            ContactItem(
+                label = "LinkedIn",
+                href = LINKEDIN_URL,
+                iconClass = "fa-brands fa-linkedin",
+                containerClasses = "p-3 bg-emerald-500/20 rounded-lg text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-colors",
+                value = FULL_NAME
+            ),
+            ContactItem(
+                label = "Email",
+                href = "mailto:$EMAIL_ADDR",
+                iconClass = "fa-solid fa-envelope",
+                containerClasses = "p-3 bg-indigo-500/20 rounded-lg text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-colors",
+                value = EMAIL_ADDR
+            ),
+            ContactItem(
+                label = "WhatsApp",
+                href = WHATSAPP_URL,
+                iconClass = "fa-brands fa-whatsapp",
+                containerClasses = "p-3 bg-emerald-500/20 rounded-lg text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-colors",
+                value = whatsAppDisplay(WHATSAPP_URL)
+            )
         )
     )
 }
