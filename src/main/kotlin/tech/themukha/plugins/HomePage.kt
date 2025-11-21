@@ -415,7 +415,7 @@ private fun FlowContent.renderFooter(content: SiteContent) {
     footer("py-8 border-t border-slate-800 bg-slate-950 text-center") {
         p("text-slate-500 text-sm font-mono") {
             +"© ${LocalDateTime.now().year} ${content.fullName}, themukha.tech. "
-            a(href = "https://github.com/themukha/cv-website", target = "_blank", classes = "underline hover:text-slate-300") { +"Powered by Ktor" }
+            a(href = "https://github.com/themukha/cv-website/", target = "_blank", classes = "underline hover:text-slate-300") { +"Powered by Ktor" }
         }
     }
 }
