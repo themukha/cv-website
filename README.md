@@ -38,3 +38,25 @@ If the server starts successfully, you'll see the following output:
 2024-12-04 14:32:45.682 [main] INFO  Application - Responding at http://0.0.0.0:8080
 ```
 
+
+## Pushing to Docker Hub
+
+To publish the site image to Docker Hub, follow these steps:
+
+1. Authenticate with Docker Hub:
+
+```
+docker login
+```
+
+2. Build the Docker image for the linux/amd64 platform and tag it:
+
+```
+docker build --platform linux/amd64 -t georgymukha/ktor-site:latest .
+```
+
+3. Push the image to Docker Hub:
+
+```
+docker push georgymukha/ktor-site:latest
+```
