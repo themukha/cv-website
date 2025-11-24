@@ -45,7 +45,7 @@ object SiteState {
             StackItem("/static/img/icons/websocket.svg", "WebSocket", "Protocol"),
             StackItem("https://cdn.simpleicons.org/openapiinitiative", "REST API", "Protocol"),
             StackItem("https://cdn.simpleicons.org/grafana", "Grafana", "Monitoring"),
-            StackItem("https://cdn.simpleicons.org/docker", "Docker", "CD/CD"),
+            StackItem("https://cdn.simpleicons.org/docker", "Docker", "CI/CD"),
             StackItem("https://cdn.simpleicons.org/jenkins", "Jenkins", "CI/CD"),
         ),
         experiences = listOf(
