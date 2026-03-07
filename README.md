@@ -82,7 +82,7 @@ server {
     server_name themukha.tech; # Primary Domain
 
     location / {
-        proxy_pass [http://127.0.0.1:8080](http://127.0.0.1:8080);
+        proxy_pass http://127.0.0.1:8080;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -95,7 +95,7 @@ server {
     server_name stats.themukha.tech; # Analytics Subdomain
 
     location / {
-        proxy_pass [http://127.0.0.1:3000](http://127.0.0.1:3000);
+        proxy_pass http://127.0.0.1:3000;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
@@ -116,10 +116,10 @@ sudo systemctl restart nginx
 The following A records must be established within the Cloudflare dashboard to route traffic to the server.
 Ensure the "Proxied" status is enabled to utilize Cloudflare's SSL and security features.
 
-| Type  | Name    | Content         | Proxy Status     |
-|:------|:--------|:----------------|:-----------------|
-| **A** | `@`     | 185.194.141.172 | Proxied (Orange) |
-| **A** | `stats` | 185.194.141.172 | Proxied (Orange) |
+| Type  | Name    | Content   | Proxy Status     |
+|:------|:--------|:----------|:-----------------|
+| **A** | `@`     | `Host IP` | Proxied (Orange) |
+| **A** | `stats` | `Host IP` | Proxied (Orange) |
 
 ---
 
