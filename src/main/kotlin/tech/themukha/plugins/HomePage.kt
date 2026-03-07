@@ -40,6 +40,7 @@ import tech.themukha.models.SiteContent
 import tech.themukha.models.StackItem
 import tech.themukha.state.SiteState
 import java.time.LocalDateTime
+import tech.themukha.utils.AppLogger.warn
 
 fun Application.configureHomePage() {
     routing {
@@ -86,6 +87,8 @@ fun Application.configureHomePage() {
 
 // --- Helpers (builders) ---
 private fun HEAD.renderHead(content: SiteContent) {
+    val umamiId = System.getenv("UMAMI_ID") ?: ""
+    val umamiUrl = System.getenv("UMAMI_URL") ?: ""
     meta { charset = "UTF-8" }
     meta {
         name = "viewport"
@@ -94,6 +97,16 @@ private fun HEAD.renderHead(content: SiteContent) {
     title { +"${content.fullName} | ${content.tagline}" }
 
     script { src = "https://cdn.tailwindcss.com" }
+    
+    if (umamiId.isNotBlank() && umamiUrl.isNotBlank()) {
+        script {
+            async = true
+            src = "$umamiUrl/script.js"
+            attributes["data-website-id"] = umamiId
+        }
+    } else {
+        warn("Umami tracking is disabled: UMAMI_ID ($umamiId) or UMAMI_URL ($umamiUrl) is not set")
+    }
 
     link(rel = "stylesheet", href = "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0")
     link(href = "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap", rel = "stylesheet")

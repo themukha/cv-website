@@ -5,3 +5,36 @@ services:
     ports:
       - "80:8080"
     restart: always
+    environment:
+      - UMAMI_ID=${UMAMI_WEBSITE_ID}
+      - UMAMI_URL=${UMAMI_URL}
+    depends_on:
+      - db
+
+  # analytics
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    container_name: umami
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      - APP_SECRET=${UMAMI_APP_SECRET}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    restart: always
+
+  # analytics DB
+  db:
+    image: postgres:15-alpine
+    container_name: umami-db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - umami-db-data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  umami-db-data:
