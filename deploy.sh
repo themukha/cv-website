@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /opt/cv-website
+
 # 1. Get updates from repo
 git fetch origin master
 
