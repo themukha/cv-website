@@ -1,0 +1,7 @@
+services:
+  cv-app:
+    build: .
+    container_name: cv-website
+    ports:
+      - "80:8080"
+    restart: always
