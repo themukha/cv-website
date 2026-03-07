@@ -40,6 +40,8 @@ Use the provided `.env.example` as a template.
 Install Docker, Docker Compose, and Nginx on the target VPS:
 `sudo apt update && sudo apt install docker.io docker-compose nginx -y`
 
+---
+
 ### 2. Project Installation
 Clone the repository to the `/opt/cv-website` directory and configure the environment:
 ```bash
@@ -49,6 +51,8 @@ cp .env.example .env
 # Edit .env with your specific credentials
 nano .env
 ```
+
+---
 
 ### 3. Continuous Deployment Automation
 The `deploy.sh` script automates the process of fetching updates from the repository and rebuilding the environment.
@@ -63,6 +67,8 @@ Append the following line to the crontab file:
 ```shell
 */5 * * * * /opt/cv-website/deploy.sh >> /var/log/cv-deploy.log 2>&1
 ```
+
+---
 
 ### 4. Nginx and SSL Configuration
 Nginx is utilized as a reverse proxy to manage incoming traffic and facilitate SSL termination through Cloudflare. This configuration allows both the primary website and the analytics dashboard to operate on standard ports (80/443).
@@ -103,6 +109,8 @@ sudo rm /etc/nginx/sites-enabled/default
 sudo nginx -t
 sudo systemctl restart nginx
 ```
+
+---
 
 ### 5. DNS Configuration (e.g. Cloudflare)
 The following A records must be established within the Cloudflare dashboard to route traffic to the server.
