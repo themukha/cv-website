@@ -41,6 +41,7 @@ import tech.themukha.models.StackItem
 import tech.themukha.state.SiteState
 import java.time.LocalDateTime
 import tech.themukha.utils.AppLogger.warn
+import tech.themukha.utils.umamiEvent
 
 fun Application.configureHomePage() {
     routing {
@@ -148,7 +149,7 @@ private fun FlowContent.renderNav(items: List<NavItem>) {
             div("flex justify-between h-16 items-center") {
                 // Logo
                 div("flex-shrink-0 flex items-center gap-2 cursor-pointer") {
-                    attributes["data-umami-event"] = "logo-click-top"
+                    umamiEvent("logo-click-top")
                     onClick = "window.scrollTo({top: 0, behavior: 'smooth'})"
                     span("material-symbols-outlined text-indigo-400") { +"terminal" }
                     span("font-mono font-bold text-xl tracking-tighter") { +"themukha.tech" }
@@ -157,7 +158,7 @@ private fun FlowContent.renderNav(items: List<NavItem>) {
                 div("hidden md:flex space-x-8 items-center") {
                     items.forEach {
                         a(href = it.href, classes = "text-sm font-medium hover:text-indigo-400 transition-colors") {
-                            attributes["data-umami-event"] = "nav-click-${it.text.lowercase().replace(" ", "-")}"
+                            umamiEvent("nav-click-${it.text.lowercase().replace(" ", "-")}")
                             +it.text
                         }
                     }
@@ -166,7 +167,7 @@ private fun FlowContent.renderNav(items: List<NavItem>) {
                 div("md:hidden flex items-center") {
                     button(classes = "text-slate-300 hover:text-white") {
                         id = "mobile-menu-btn"
-                        attributes["data-umami-event"] = "mobile-menu-toggle"
+                        umamiEvent("mobile-menu-toggle")
                         span("material-symbols-outlined") { +"menu" }
                     }
                 }
@@ -178,7 +179,7 @@ private fun FlowContent.renderNav(items: List<NavItem>) {
             div("px-4 pt-2 pb-4 space-y-1") {
                 items.forEach {
                     a(href = it.href, classes = "block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-800") {
-                        attributes["data-umami-event"] = "nav-click-mobile-${it.text.lowercase().replace(" ", "-")}"
+                        umamiEvent("nav-click-mobile-${it.text.lowercase().replace(" ", "-")}")
                         +it.text
                     }
                 }
@@ -221,12 +222,12 @@ private fun FlowContent.renderHero(content: SiteContent) {
                     }
                     div("flex flex-wrap gap-4") {
                         a(href = content.telegram, classes = "px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-500/25 flex items-center gap-2 group") {
-                            attributes["data-umami-event"] = "hero-main-contact"
+                            umamiEvent("hero-main-contact")
                             span { +"Contact with me" }
                             span("material-symbols-outlined group-hover:translate-x-1 transition-transform") { +"arrow_forward" }
                         }
                         a(href = "#resume", classes = "px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl transition-all border border-slate-700 flex items-center gap-2") {
-                            attributes["data-umami-event"] = "hero-scroll-to-cv"
+                            umamiEvent("hero-scroll-to-cv")
                             span("material-symbols-outlined") { +"download" }
                             span { +"Download CV" }
                         }
@@ -243,13 +244,13 @@ private fun FlowContent.renderHero(content: SiteContent) {
                         // Image
                         div("absolute inset-4 rounded-full overflow-hidden ring-4 ring-slate-800 shadow-2xl") {
                             img(src = content.photoUrl, alt = content.fullName, classes = "w-full h-full object-cover hover:scale-105 transition-transform duration-700") {
-                                attributes["data-umami-event"] = "hero-avatar-click"
+                                umamiEvent("hero-avatar-click")
                             }
                         }
 
                         // Floating Stats
                         div("absolute -right-4 top-20 glass-panel p-4 rounded-2xl border border-slate-700 shadow-xl animate-bounce") {
-                            attributes["data-umami-event"] = "hero-kotlin-badge"
+                            umamiEvent("hero-kotlin-badge")
                             attributes["style"] = "animation-duration: 3s;"
                             div("flex items-center gap-3") {
                                 div("p-2 bg-orange-500/10 rounded-lg") { img(src = "https://cdn.simpleicons.org/kotlin", alt = "Kotlin", classes = "w-10 h-10 inline-block group-hover:scale-110 transition-transform") }
@@ -275,7 +276,7 @@ private fun FlowContent.renderStack(items: List<StackItem>) {
             div("grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6") {
                 fun FlowContent.techCard(iconUrl: String, title: String, subtitle: String) {
                     div("p-6 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-indigo-500/50 transition-all text-center group") {
-                        attributes["data-umami-event"] = "stack-card-click-${title.lowercase().replace(" ", "-")}"
+                        umamiEvent("stack-card-click-${title.lowercase().replace(" ", "-")}")
                         div("mb-3 flex justify-center") { img(src = iconUrl, alt = title, classes = "w-10 h-10 inline-block group-hover:scale-110 transition-transform") }
                         h3("font-bold text-slate-200") { +title }
                         p("text-xs text-slate-400 mt-1") { +subtitle }
@@ -284,7 +285,7 @@ private fun FlowContent.renderStack(items: List<StackItem>) {
                 items.forEach { techCard(it.iconUrl, it.title, it.subtitle) }
                 div("mt-6 col-span-full text-center") {
                     a(href = "#resume", classes = "text-xs text-slate-400 italic hover:text-indigo-400 transition-colors") {
-                        attributes["data-umami-event"] = "stack-explore-more-click"
+                        umamiEvent("stack-explore-more-click")
                         +"More details in the resume below..."
                     }
                 }
@@ -306,12 +307,12 @@ private fun FlowContent.renderResume(content: SiteContent) {
             // Download Buttons
             div("flex justify-center gap-4 mb-8") {
                 a(href = content.cvRuUrl, target = "_blank", classes = "flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 transition-colors border border-slate-700") {
-                    attributes["data-umami-event"] = "download-cv-ru"
+                    umamiEvent("download-cv-ru")
                     span("material-symbols-outlined") { +"download" }
                     +"CV (RU)"
                 }
                 a(href = content.cvEnUrl, target = "_blank", classes = "flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 transition-colors border border-slate-700") {
-                    attributes["data-umami-event"] = "download-cv-en"
+                    umamiEvent("download-cv-en")
                     span("material-symbols-outlined") { +"download" }
                     +"CV (EN)"
                 }
@@ -365,7 +366,7 @@ private fun FlowContent.renderResume(content: SiteContent) {
                                     if (exp.stack.isNotEmpty()) {
                                         div("mt-3 flex flex-wrap gap-2") { exp.stack.forEach { tech ->
                                             span("px-2 py-0.5 rounded-full border border-slate-300 bg-slate-100 text-slate-700 text-xs") {
-                                                attributes["data-umami-event"] = "resume-tech-badge-view-${tech.lowercase()}"
+                                                umamiEvent("resume-tech-badge-view-${tech.lowercase()}")
                                                 +tech
                                             }
                                         } }
@@ -425,7 +426,7 @@ private fun FlowContent.renderContacts(content: SiteContent) {
                     div("space-y-4") {
                         content.contacts.forEach { c ->
                             a(href = c.href, target = if (c.label == "Email") null else "_blank", classes = "flex items-center gap-4 p-4 rounded-xl bg-slate-800/50 border border-slate-700 hover:bg-slate-800 transition-all group") {
-                                attributes["data-umami-event"] = "contact-click-${c.label.lowercase()}"
+                                umamiEvent("contact-click-${c.label.lowercase()}")
                                 div(c.containerClasses) { i(c.iconClass) {} }
                                 div {
                                     p("text-xs text-slate-500 uppercase font-bold tracking-wider") { +c.label }
@@ -441,7 +442,7 @@ private fun FlowContent.renderContacts(content: SiteContent) {
                     img(src = "/static/img/map.jpg", alt = "Location", classes = "w-full h-full object-cover opacity-60")
                     div("absolute inset-0 flex items-center justify-center p-6") {
                         div("bg-slate-900/90 backdrop-blur-md p-6 rounded-xl border border-slate-600 max-w-sm text-center shadow-2xl") {
-                            attributes["data-umami-event"] = "contact-location-info-click"
+                            umamiEvent("contact-location-info-click")
                             span("material-symbols-outlined text-4xl text-indigo-400 mb-2") { +"flight_takeoff" }
                             h3("text-xl font-bold text-white") { +"Currently In" }
                             p("text-slate-300 mt-1") { +"Serbia / Remote" }
@@ -459,7 +460,7 @@ private fun FlowContent.renderFooter(content: SiteContent) {
         p("text-slate-500 text-sm font-mono") {
             +"© ${LocalDateTime.now().year} ${content.fullName}, themukha.tech. "
             a(href = "https://github.com/themukha/cv-website/", target = "_blank", classes = "underline hover:text-slate-300") {
-                attributes["data-umami-event"] = "footer-github-link"
+                umamiEvent("footer-github-link")
                 +"Powered by Ktor"
             }
         }
