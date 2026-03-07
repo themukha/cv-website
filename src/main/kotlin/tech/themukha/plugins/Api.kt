@@ -7,16 +7,19 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.put
 import io.ktor.server.routing.routing
 import tech.themukha.state.SiteState
+import tech.themukha.utils.AppLogger.warn
 
 fun Application.configureApi() {
     routing {
         // Public API: get current content
         get("/api/content") {
+            warn("API: GET /api/content requested")
             call.respond(SiteState.content)
         }
 
         // Admin API: update content, not yet implemented
         put("/api/content") {
+            warn("API: PUT /api/content requested (Not Implemented)")
             call.respond(HttpStatusCode.NotImplemented, "Feature not yet implemented")
 //            // Simple admin token check via header
 //            val adminToken = System.getenv("ADMIN_TOKEN") ?: "change-me"

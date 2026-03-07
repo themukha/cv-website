@@ -6,8 +6,10 @@ import io.ktor.server.application.install
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import kotlinx.serialization.json.Json
+import tech.themukha.utils.AppLogger.info
 
 fun Application.configurePlugins() {
+    info("Installing CallLogging and ContentNegotiation plugins...")
     install(CallLogging)
     install(ContentNegotiation) {
         json(
@@ -17,4 +19,5 @@ fun Application.configurePlugins() {
             }
         )
     }
+    info("Plugins installed successfully.")
 }
