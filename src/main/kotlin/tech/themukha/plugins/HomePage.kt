@@ -205,7 +205,8 @@ private fun FlowContent.renderHero(content: SiteContent) {
                 div("space-y-8 animate-fade-in") {
                     attributes["style"] = "animation-delay: 0.1s;"
                     div {
-                        div("inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-sm font-medium mb-6") {
+                        div("inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-sm font-medium mb-6 cursor-help") {
+                            umamiEvent("hero-status-click")
                             span("relative flex h-2 w-2") {
                                 span("animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75") {}
                                 span("relative inline-flex rounded-full h-2 w-2 bg-indigo-500") {}
@@ -323,9 +324,9 @@ private fun FlowContent.renderResume(content: SiteContent) {
                 // Toolbar
                 div("bg-slate-800/80 rounded-t-xl px-4 py-3 flex justify-between items-center border-b border-slate-700") {
                     div("flex space-x-2") {
-                        div("w-3 h-3 rounded-full bg-red-500") {}
-                        div("w-3 h-3 rounded-full bg-yellow-500") {}
-                        div("w-3 h-3 rounded-full bg-green-500") {}
+                        div("w-3 h-3 rounded-full bg-red-500 cursor-pointer") { umamiEvent("resume-window-red-dot") }
+                        div("w-3 h-3 rounded-full bg-yellow-500 cursor-pointer") { umamiEvent("resume-window-yellow-dot") }
+                        div("w-3 h-3 rounded-full bg-green-500 cursor-pointer") { umamiEvent("resume-window-green-dot") }
                     }
                 }
                 // Content
@@ -476,6 +477,18 @@ private fun FlowContent.renderScripts() {
                     const menu = document.getElementById('mobile-menu');
                     menu.classList.toggle('hidden');
                 });
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            if (window.umami) {
+                                umami.track('section-view', { name: entry.target.id });
+                            }
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                document.querySelectorAll('section[id]').forEach(section => observer.observe(section));
                 """
             )
         }
