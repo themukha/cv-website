@@ -323,7 +323,11 @@ private fun FlowContent.renderResume(content: SiteContent) {
             div("glass-panel rounded-2xl p-1 border border-slate-700 shadow-2xl") {
                 // Toolbar
                 div("bg-slate-800/80 rounded-t-xl px-4 py-3 flex justify-between items-center border-b border-slate-700") {
-                    div("flex space-x-2") {
+                    div("flex space-x-2 relative group") {
+                        span("absolute -top-10 left-0 hidden group-hover:block bg-slate-700 text-white text-[10px] px-2 py-1 rounded-md whitespace-nowrap shadow-xl border border-slate-600 animate-fade-in") {
+                            +"I haven't figured out what to do on click yet"
+                        }
+
                         div("w-3 h-3 rounded-full bg-red-500 cursor-pointer") { umamiEvent("resume-window-red-dot") }
                         div("w-3 h-3 rounded-full bg-yellow-500 cursor-pointer") { umamiEvent("resume-window-yellow-dot") }
                         div("w-3 h-3 rounded-full bg-green-500 cursor-pointer") { umamiEvent("resume-window-green-dot") }
