@@ -307,13 +307,28 @@ private fun FlowContent.renderResume(content: SiteContent) {
 
             // Download Buttons
             div("flex justify-center gap-4 mb-8") {
-                a(href = content.cvRuUrl, target = "_blank", classes = "flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 transition-colors border border-slate-700") {
+                a(href = content.cvRuUrl, target = "_blank", classes = "relative group flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 transition-colors border border-slate-700") {
                     umamiEvent("download-cv-ru")
+
+                    span("absolute -top-8 left-0 right-0 flex justify-center hidden group-hover:flex z-10") {
+                        span("bg-indigo-600 text-white text-[10px] px-2 py-1 rounded-md whitespace-nowrap shadow-xl border border-indigo-500 animate-fade-in") {
+                            +"Open Russian version"
+                        }
+                    }
+
                     span("material-symbols-outlined") { +"download" }
                     +"CV (RU)"
                 }
-                a(href = content.cvEnUrl, target = "_blank", classes = "flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 transition-colors border border-slate-700") {
+
+                a(href = content.cvEnUrl, target = "_blank", classes = "relative group flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 transition-colors border border-slate-700") {
                     umamiEvent("download-cv-en")
+
+                    span("absolute -top-8 left-0 right-0 flex justify-center hidden group-hover:flex z-10") {
+                        span("bg-indigo-600 text-white text-[10px] px-2 py-1 rounded-md whitespace-nowrap shadow-xl border border-indigo-500 animate-fade-in") {
+                            +"Open English version"
+                        }
+                    }
+
                     span("material-symbols-outlined") { +"download" }
                     +"CV (EN)"
                 }
