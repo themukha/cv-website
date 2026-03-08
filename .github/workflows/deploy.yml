@@ -1,0 +1,20 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Make deploy script executable
+        run: chmod +x ./deploy.sh
+
+      - name: Execute deploy script
+        run: sh ./deploy.sh
