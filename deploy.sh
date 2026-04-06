@@ -2,7 +2,6 @@
 
 echo "Fetching latest changes..."
 
-git fetch
 git pull origin master
 
 echo "$(date): Starting deploy..."
