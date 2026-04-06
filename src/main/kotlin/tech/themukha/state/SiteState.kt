@@ -8,11 +8,13 @@ import tech.themukha.models.StackItem
 
 object SiteState {
     // Base contact sources
+    private const val DOMAIN = "themukha.tech"
     private const val FULL_NAME = "George Mukha"
     private const val TELEGRAM_URL = "https://t.me/themukha_tech"
     private const val LINKEDIN_URL = "https://www.linkedin.com/in/themukha/"
     private const val WHATSAPP_URL = "https://wa.me/66638853290"
     private const val EMAIL_ADDR = "george@themukha.tech"
+    private const val GITHUB_URL = "https://github.com/themukha"
 
     private fun telegramHandle(url: String): String = url.substringAfterLast('/').let { if (it.isNotBlank()) "@${it}" else "Telegram" }
     private fun whatsAppDisplay(url: String): String = url.substringAfterLast('/').let { if (it.all { ch -> ch.isDigit() }) "+$it" else url }
@@ -25,12 +27,14 @@ object SiteState {
             NavItem("Contacts", "#contact")
         ),
         fullName = FULL_NAME,
+        domain = DOMAIN,
         tagline = "QA Auto Engineer / SDET",
         about = "AQA/SDET with over 5 years of experience in the tech industry. I implement new technologies to automate product quality assurance.",
         telegram = TELEGRAM_URL,
         whatsapp = WHATSAPP_URL,
         email = EMAIL_ADDR,
         linkedin = LINKEDIN_URL,
+        github = GITHUB_URL,
         photoUrl = "/static/img/avatar.jpg",
         cvEnUrl = "/static/cv_en.pdf",
         cvRuUrl = "/static/cv_ru.pdf",

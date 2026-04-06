@@ -1,0 +1,31 @@
+# {{fullName}} — {{tagline}} (Full Profile)
+
+> {{seoDescription}}
+
+## About
+
+{{about}}
+
+## Key Facts
+
+- Full name: {{fullName}} ({{alternateNames}})
+- Role: {{jobTitles}}
+- Experience: 5+ years in QA and test automation
+- Main technologies: {{stack}}
+- Languages: English, Russian
+- Location: Serbia / Remote
+- Open to offers: Yes
+
+## Work Experience
+
+{{experiences}}
+
+{{projectActivities}}
+
+## Technology Stack
+
+{{stack}}
+
+## Contact Information
+
+{{contacts}}

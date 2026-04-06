@@ -32,6 +32,7 @@ import kotlinx.html.span
 import kotlinx.html.i
 import kotlinx.html.ul
 import kotlinx.html.li
+import kotlinx.html.main
 import kotlinx.html.style
 import kotlinx.html.title
 import kotlinx.html.unsafe
@@ -41,6 +42,7 @@ import tech.themukha.models.StackItem
 import tech.themukha.state.SiteState
 import java.time.LocalDateTime
 import tech.themukha.utils.AppLogger.warn
+import tech.themukha.utils.SeoUtils
 import tech.themukha.utils.umamiEvent
 
 fun Application.configureHomePage() {
@@ -49,6 +51,7 @@ fun Application.configureHomePage() {
             val content = SiteState.content
 
             call.respondHtml(HttpStatusCode.OK) {
+                attributes["lang"] = "en"
                 head {
                     renderHead(content)
                 }
@@ -58,22 +61,26 @@ fun Application.configureHomePage() {
 
                     // --- NAVIGATION ---
                     run {
-                        renderNav(content.navigation)
+                        renderNav(content)
                     }
 
-                    // --- HERO SECTION ---
-                    renderHero(content)
+                    main {
+                        attributes["role"] = "main"
 
-                    // --- STACK SECTION ---
-                    run {
-                        renderStack(content.commonStack)
+                        // --- HERO SECTION ---
+                        renderHero(content)
+
+                        // --- STACK SECTION ---
+                        run {
+                            renderStack(content.commonStack)
+                        }
+
+                        // --- RESUME SECTION ---
+                        renderResume(content)
+
+                        // --- CONTACT SECTION ---
+                        renderContacts(content)
                     }
-
-                    // --- RESUME SECTION ---
-                    renderResume(content)
-
-                    // --- CONTACT SECTION ---
-                    renderContacts(content)
 
                     // --- FOOTER ---
                     renderFooter(content)
@@ -87,18 +94,88 @@ fun Application.configureHomePage() {
 }
 
 // --- Helpers (builders) ---
+
 private fun HEAD.renderHead(content: SiteContent) {
     val umamiId = System.getenv("UMAMI_ID") ?: ""
     val umamiUrl = System.getenv("UMAMI_URL") ?: ""
+
+    val title = SeoUtils.seoTitle(content)
+    val description = SeoUtils.seoDescription(content)
+    val keywords = SeoUtils.seoKeywords(content)
+    val imageUrl = SeoUtils.ogImageUrl(content)
+    val siteUrl = SeoUtils.siteUrl(content)
+
+    // Basic meta
     meta { charset = "UTF-8" }
     meta {
         name = "viewport"
         this.content = "width=device-width, initial-scale=1.0"
     }
-    title { +"${content.fullName} | ${content.tagline}" }
+    title { +title }
+    meta {
+        name = "description"
+        this.content = description
+    }
+    meta {
+        name = "keywords"
+        this.content = keywords
+    }
+    meta {
+        name = "author"
+        this.content = content.fullName
+    }
+    meta {
+        name = "robots"
+        this.content = "index, follow"
+    }
 
+    // Canonical URL
+    link(rel = "canonical", href = siteUrl)
+
+    // AI / LLM crawler hints
+    link(rel = "alternate", type = "text/plain", href = "$siteUrl/llms.txt") {
+        attributes["title"] = "LLM-readable summary"
+    }
+    link(rel = "alternate", type = "text/plain", href = "$siteUrl/llms-full.txt") {
+        attributes["title"] = "LLM-readable full profile"
+    }
+
+    // Open Graph tags
+    meta("property", "og:type") { attributes["content"] = "website" }
+    meta("property", "og:url") { attributes["content"] = siteUrl }
+    meta("property", "og:title") { attributes["content"] = title }
+    meta("property", "og:description") { attributes["content"] = description }
+    meta("property", "og:image") { attributes["content"] = imageUrl }
+    meta("property", "og:locale") { attributes["content"] = "en_US" }
+    meta("property", "og:locale:alternate") { attributes["content"] = "ru_RU" }
+    meta("property", "og:site_name") { attributes["content"] = content.domain }
+
+    // Twitter Card tags
+    meta {
+        name = "twitter:card"
+        this.content = "summary_large_image"
+    }
+    meta {
+        name = "twitter:title"
+        this.content = title
+    }
+    meta {
+        name = "twitter:description"
+        this.content = description
+    }
+    meta {
+        name = "twitter:image"
+        this.content = imageUrl
+    }
+
+    // JSON-LD Structured Data (Person + WebSite + FAQ)
+    script(type = "application/ld+json") {
+        unsafe { raw(SeoUtils.buildJsonLd(content)) }
+    }
+
+    // External resources
     script { src = "https://cdn.tailwindcss.com" }
-    
+
     if (umamiId.isNotBlank() && umamiUrl.isNotBlank()) {
         script {
             async = true
@@ -142,8 +219,10 @@ private fun HEAD.renderHead(content: SiteContent) {
     }
 }
 
-private fun FlowContent.renderNav(items: List<NavItem>) {
+private fun FlowContent.renderNav(content: SiteContent) {
+    val items = content.navigation
     nav {
+        attributes["aria-label"] = "Main navigation"
         attributes["class"] = "fixed top-0 w-full z-50 glass-panel border-b border-slate-800"
         div("max-w-6xl mx-auto px-4 sm:px-6 lg:px-8") {
             div("flex justify-between h-16 items-center") {
@@ -152,7 +231,7 @@ private fun FlowContent.renderNav(items: List<NavItem>) {
                     umamiEvent("logo-click-top")
                     onClick = "window.scrollTo({top: 0, behavior: 'smooth'})"
                     span("material-symbols-outlined text-indigo-400") { +"terminal" }
-                    span("font-mono font-bold text-xl tracking-tighter") { +"themukha.tech" }
+                    span("font-mono font-bold text-xl tracking-tighter") { +content.domain }
                 }
                 // Desktop Menu
                 div("hidden md:flex space-x-8 items-center") {
@@ -478,8 +557,8 @@ private fun FlowContent.renderContacts(content: SiteContent) {
 private fun FlowContent.renderFooter(content: SiteContent) {
     footer("py-8 border-t border-slate-800 bg-slate-950 text-center") {
         p("text-slate-500 text-sm font-mono") {
-            +"© ${LocalDateTime.now().year} ${content.fullName}, themukha.tech. "
-            a(href = "https://github.com/themukha/cv-website/", target = "_blank", classes = "underline hover:text-slate-300") {
+            +"© ${LocalDateTime.now().year} ${content.fullName}, ${content.domain}. "
+            a(href = "${content.github}/cv-website/", target = "_blank", classes = "underline hover:text-slate-300") {
                 umamiEvent("footer-github-link")
                 +"Powered by Ktor"
             }

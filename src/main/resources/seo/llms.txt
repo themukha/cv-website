@@ -1,0 +1,22 @@
+# {{fullName}} — {{tagline}}
+
+> {{seoDescription}}
+
+## About
+
+{{about}}
+
+## Key Facts
+
+- Full name: {{fullName}} ({{alternateNames}})
+- Role: {{jobTitles}}
+- Experience: 5+ years in QA and test automation
+- Main technologies: {{stack}}
+- Languages: English, Russian
+- Location: Serbia / Remote
+- Open to offers: Yes
+
+## Links
+
+{{links}}
+- Full version of this file: {{siteUrl}}/llms-full.txt
