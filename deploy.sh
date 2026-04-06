@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Fetching latest changes..."
+echo "$(date): Fetching latest changes..."
 
 git pull origin master
 
