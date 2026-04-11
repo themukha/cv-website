@@ -10,7 +10,7 @@ object SiteState {
     // Base contact sources
     private const val DOMAIN = "themukha.tech"
     private const val FULL_NAME = "George Mukha"
-    private const val TELEGRAM_URL = "https://t.me/themukha_tech"
+    private const val TELEGRAM_URL = "https://t.me/themukha"
     private const val LINKEDIN_URL = "https://www.linkedin.com/in/themukha/"
     private const val WHATSAPP_URL = "https://wa.me/66638853290"
     private const val EMAIL_ADDR = "george@themukha.tech"
