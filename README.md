@@ -79,7 +79,7 @@ Create a new configuration file at `/etc/nginx/sites-available/cv-site`:
 ```nginx
 server {
     listen 80;
-    server_name themukha.tech; # Primary Domain
+    server_name themukha.com; # Primary Domain
 
     location / {
         proxy_pass http://127.0.0.1:8080;
@@ -92,7 +92,7 @@ server {
 
 server {
     listen 80;
-    server_name stats.themukha.tech; # Analytics Subdomain
+    server_name stats.themukha.com; # Analytics Subdomain
 
     location / {
         proxy_pass http://127.0.0.1:3000;
@@ -124,12 +124,12 @@ Ensure the "Proxied" status is enabled to utilize Cloudflare's SSL and security 
 ---
 
 ### 6. Umami Analytics Setup
-1. Access the analytics interface via `https://stats.themukha.tech`.
+1. Access the analytics interface via `https://stats.themukha.com`.
 2. **Initial Credentials**: Use `admin` as the username and `umami` as the default password.
 3. **Security**: Change the administrative password immediately in the *Settings > Profile* section.
 4. **Website Integration**:
     * Navigate to *Settings > Websites > Add website*.
-    * Register your domain (e.g., `themukha.tech`).
+    * Register your domain (e.g., `themukha.com`).
     * Copy the generated `Website ID`.
     * Update the `UMAMI_WEBSITE_ID` variable in the server's `.env` file and restart the containers.
 

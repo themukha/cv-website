@@ -8,12 +8,12 @@ import tech.themukha.models.StackItem
 
 object SiteState {
     // Base contact sources
-    private const val DOMAIN = "themukha.tech"
+    private const val DOMAIN = "themukha.com"
     private const val FULL_NAME = "George Mukha"
     private const val TELEGRAM_URL = "https://t.me/themukha"
     private const val LINKEDIN_URL = "https://www.linkedin.com/in/themukha/"
     private const val WHATSAPP_URL = "https://wa.me/66638853290"
-    private const val EMAIL_ADDR = "george@themukha.tech"
+    private const val EMAIL_ADDR = "george@themukha.com"
     private const val GITHUB_URL = "https://github.com/themukha"
 
     private fun telegramHandle(url: String): String = url.substringAfterLast('/').let { if (it.isNotBlank()) "@${it}" else "Telegram" }
